@@ -1,0 +1,19 @@
+{
+  "name": "codemirror-javascript",
+  "license": "MIT",
+  "version": "0.1.0",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "CodeMirror JavaScript",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/codemirror-javascript.git"
+  },
+  "dependencies": {
+    "codemirror": "^5.6.0",
+    "codemirror-extension": "^0.1.0",
+    "tern": "^0.13.0"
+  },
+  "keywords": [
+    "CodeMirror"
+  ]
+}
