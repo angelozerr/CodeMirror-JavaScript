@@ -221,10 +221,10 @@
                     var list, argTypes = guessType && guessType.args && guessType.args[nbVar++];
                     if (argTypes) {
                       list = [];
-                      for (var i = 0; i < argTypes.length; i++) {
-                        for(var arg in guessType) {
-                          list = list.concat(guessType[arg]);
-                        }
+                      var names = argTypes.split("|");
+                      for (var j = 0; j < names.length; j++) {
+                        var l = guessType[names[j]];
+                        if (l) list = list.concat(l);
                       }
                     }
                     tokens.push({variable: currentParam, list: list});
