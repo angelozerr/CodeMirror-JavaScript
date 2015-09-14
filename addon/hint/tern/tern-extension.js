@@ -206,7 +206,7 @@
                     } else {
                       tokens.push(', ');
                     }
-                    tokens.push({variable: currentParam, list: ["A", "B"]});
+                    tokens.push({variable: currentParam});
                   }
                   currentParam = null;
                   optionalParam = false;
