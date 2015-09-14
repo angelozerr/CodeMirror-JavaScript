@@ -135,7 +135,7 @@
   }
 
   function getText(completion) {
-    var text = completion.name;
+    var text = completion.displayName || completion.name;
     var type = completion.type;
     var returnType = null;
     if (startsWith(type, 'fn(')) {
@@ -206,7 +206,7 @@
                     } else {
                       tokens.push(', ');
                     }
-                    tokens.push({variable: currentParam});
+                    tokens.push({variable: currentParam, list: ["A", "B"]});
                   }
                   currentParam = null;
                   optionalParam = false;
