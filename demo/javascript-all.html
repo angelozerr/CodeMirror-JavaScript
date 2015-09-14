@@ -49,13 +49,16 @@
   <script src="../node_modules/codemirror-extension/addon/hint/templates-hint.js"></script>
   
   <!-- CodeMirror Javascript -->
-  <script src="../addon/hint/javascript/javascript-templates.js"></script>
+  <script src="../node_modules/tern-guess-types/guess-types.js"></script>
 
   <!-- Tern Hover -->
   <link rel="stylesheet" href="../node_modules/codemirror-extension/addon/hover/text-hover.css">
   <script src="../node_modules/codemirror-extension/addon/hover/text-hover.js"></script>
   <script src="../addon/hint/tern/tern-hover.js"></script>
-    		          
+    		         
+  <!-- Tern Guess Types-->
+  <script src="../addon/hint/tern/tern-hover.js"></script>
+      		          
   </head>
   <body>
     
@@ -80,6 +83,10 @@
     <form><textarea id="code" name="code">var arr = [];
 arr. // do Ctrl+Space here to open completion with array method. It uses the CodeMirror Tern addon
 for // do Ctrl+Space here to open templates (snippet). It uses the CodeMirror Javascript templates addon
+
+var i = 0, j = 10, s1 = "";
+s1.cha
+
 </textarea></form>
     <script type="text/javascript">
        
@@ -116,6 +123,7 @@ for // do Ctrl+Space here to open templates (snippet). It uses the CodeMirror Ja
         },
         gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers"],
     	lintWith: CodeMirror.javascriptValidator,
+    	ternWith: {"plugins": {"guess-types": {}}},
     	textHover: {delay:300}
       });
     </script>
