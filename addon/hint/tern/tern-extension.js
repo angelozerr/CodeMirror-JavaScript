@@ -173,7 +173,7 @@
     var guess;
     ts.request(cm, {type: "guess-types", end: from, property: property}, function(error, data) {
       if (error) return showError(ts, cm, error);
-      guess = data;//applyChanges(ts, data.changes);
+      guess = data;
     });
     return guess;
   }
@@ -221,10 +221,14 @@
                     var list, argTypes = guessType && guessType.args && guessType.args[nbVar++];
                     if (argTypes) {
                       list = [];
-                      var names = argTypes.split("|");
-                      for (var j = 0; j < names.length; j++) {
-                        var l = guessType[names[j]];
-                        if (l) list = list.concat(l);
+                      var types = argTypes.split("|");
+                      for (var j = 0; j < types.length; j++) {
+                        var type = types[j], l = guessType[type];
+                        if (l) {
+                          for (var k = 0; k < l.length; k++) {
+                            list.push({"text": l[k], "type": type});
+                          }
+                        }                    
                       }
                     }
                     tokens.push({variable: currentParam, list: list});
@@ -247,7 +251,6 @@
       }
       tokens.push(')');
     }
-
     tokens.push({cursor: true});
     return new CodeMirror.templatesHint.Template({tokens: tokens});
   }
