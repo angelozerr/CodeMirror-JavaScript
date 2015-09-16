@@ -1,8 +1,10 @@
 (function() {
   "use strict";
 
-  var defaultServer = null, defs = [], Pos = CodeMirror.Pos;
-
+  var defaultServer = null, defs = [];
+  var Pos = CodeMirror.Pos;
+  var cls = "CodeMirror-Tern-";
+  
   function TernState(cm, options) {
     this.options = options;
   }
@@ -11,10 +13,7 @@
     if (options instanceof Function)
       return {
         getText : options
-      };
-    /*else if (!options || !options.getText)
-      throw new Error(
-          "Required option 'getText' missing (tern-extension addon)");*/
+    };
     return options;
   }
 
@@ -223,12 +222,12 @@
                       list = [];
                       var types = argTypes.split("|");
                       for (var j = 0; j < types.length; j++) {
-                        var type = types[j], l = guessType[type];
+                        var type = types[j], className = type ? typeToIcon(type) : null, l = guessType[type];
                         if (l) {
                           for (var k = 0; k < l.length; k++) {
-                            list.push({"text": l[k], "type": type});
+                            list.push({"text": l[k], "type": type, "className": className});
                           }
-                        }                    
+                        }
                       }
                     }
                     tokens.push({variable: currentParam, list: list});
@@ -255,6 +254,16 @@
     return new CodeMirror.templatesHint.Template({tokens: tokens});
   }
 
+  function typeToIcon(type) {
+    var suffix;
+    if (type == "?") suffix = "unknown";
+    else if (type == "number" || type == "string" || type == "bool") suffix = type;
+    else if (/^fn\(/.test(type)) suffix = "fn";
+    else if (/^\[/.test(type)) suffix = "array";
+    else suffix = "object";
+    return cls + "completion " + cls + "completion-" + suffix;
+  }
+  
   CodeMirror.defineOption("ternWith", false, function(cm, val, old) {
     if (old && old != CodeMirror.Init) {
       delete cm.state.ternExt;
