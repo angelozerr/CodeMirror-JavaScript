@@ -10,10 +10,7 @@
   }
 
   function parseOptions(options) {
-    if (options instanceof Function)
-      return {
-        getText : options
-    };
+    if (options instanceof Function) return {getText : options};
     return options;
   }
 
@@ -117,10 +114,8 @@
         plugins: plugins,
         fileFilter : fileFilter,
         completionTip : function(data) {
-          if (data.info)
-            return data.info(data);
-          if (data.doc)
-            return data.doc;
+          if (data.info) return data.info(data);
+          if (data.doc) return data.doc;
         }
       });
     }
@@ -217,7 +212,7 @@
                     } else {
                       tokens.push(', ');
                     }                    
-                    var list, argTypes = guessType && guessType.args && guessType.args[nbVar++];
+                    var list, argTypes = guessType && guessType["!args"] && guessType["!args"][nbVar++];
                     if (argTypes) {
                       list = [];
                       var types = argTypes.split("|");
@@ -225,7 +220,15 @@
                         var type = types[j], className = type ? typeToIcon(type) : null, l = guessType[type];
                         if (l) {
                           for (var k = 0; k < l.length; k++) {
-                            list.push({"text": l[k], "type": type, "className": className});
+                            var argCompletion = {"type": type, "className": className};
+                            var item = l[k], text, displayText;
+                            if ((typeof item == 'string')) {
+                              argCompletion.text = item;
+                            } else {
+                              argCompletion.text = item.name;
+                              if (item.displayName) argCompletion.displayText = item.displayName;
+                            }
+                            list.push(argCompletion);
                           }
                         }
                       }
